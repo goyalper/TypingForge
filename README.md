@@ -10,7 +10,7 @@ TypingForge is a client-side React typing practice studio for multilingual pract
 
 ## Automated checks and deployment
 
-GitHub Actions runs `npm ci`, the share-link tests, and a production build for pushes and pull requests targeting `main`. A successful push to `main` is deployed to GitHub Pages at `https://goyalper.github.io/TypingForge/`.
+GitHub Actions runs `npm ci`, the share-link tests, and a production build for pushes and pull requests targeting `main`. A successful push to `main` is deployed to GitHub Pages at [typingforge.forgesoft.in](https://typingforge.forgesoft.in/). The workflow preserves the repository's `CNAME` file so the custom domain stays attached to the published site.
 
 To enable the first deployment, open the repository's **Settings → Pages** and choose **GitHub Actions** as the build and deployment source.
 
