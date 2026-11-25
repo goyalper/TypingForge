@@ -8,6 +8,12 @@ TypingForge is a client-side React typing practice studio for multilingual pract
 2. Run npm install once.
 3. Run npm run dev and open the local address Vite prints.
 
+## Automated checks and deployment
+
+GitHub Actions runs `npm ci`, the share-link tests, and a production build for pushes and pull requests targeting `main`. A successful push to `main` is deployed to GitHub Pages at `https://goyalper.github.io/TypingForge/`.
+
+To enable the first deployment, open the repository's **Settings → Pages** and choose **GitHub Actions** as the build and deployment source.
+
 ## What’s included
 
 - Timed typing tests with five passage difficulty levels.
