@@ -1,0 +1,9 @@
+node_modules/
+dist/
+.git-meta/
+.env
+.env.*
+!.env.example
+*.log
+.DS_Store
+Thumbs.db
