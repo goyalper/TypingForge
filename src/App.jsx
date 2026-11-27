@@ -669,8 +669,16 @@ function App() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  const updatePointerGlow = (event) => {
+    if (event.pointerType === 'touch') return;
+    event.currentTarget.style.setProperty('--pointer-x', `${event.clientX}px`);
+    event.currentTarget.style.setProperty('--pointer-y', `${event.clientY}px`);
+    event.currentTarget.style.setProperty('--pointer-opacity', '1');
+  };
+  const resetPointerGlow = (event) => event.currentTarget.style.setProperty('--pointer-opacity', '0');
+
   return (
-    <div className="app-shell">
+    <div className="app-shell" onPointerMove={updatePointerGlow} onPointerLeave={resetPointerGlow}>
       <aside className={'sidebar ' + (mobileNav ? 'sidebar-open' : '')}>
         <div className="brand-row">
           <button className="brand" onClick={() => { setView('dashboard'); setMobileNav(false); }} aria-label="TypingForge home">
@@ -741,10 +749,23 @@ function PageIntro({ eyebrow, title, children, action }) {
 }
 
 function Dashboard({ stats, runs, go, startTest }) {
+  const tiltKeyboard = (event) => {
+    if (event.pointerType === 'touch') return;
+    const bounds = event.currentTarget.getBoundingClientRect();
+    const x = Math.max(-1, Math.min(1, ((event.clientX - bounds.left) / bounds.width - .5) * 2));
+    const y = Math.max(-1, Math.min(1, ((event.clientY - bounds.top) / bounds.height - .5) * 2));
+    event.currentTarget.style.setProperty('--key-tilt-x', `${-y * 4}deg`);
+    event.currentTarget.style.setProperty('--key-tilt-y', `${x * 5}deg`);
+  };
+  const resetKeyboardTilt = (event) => {
+    event.currentTarget.style.setProperty('--key-tilt-x', '0deg');
+    event.currentTarget.style.setProperty('--key-tilt-y', '0deg');
+  };
+
   return <>
     <section className="dashboard-welcome">
       <div className="welcome-content"><span className="welcome-kicker"><i /> YOUR PRACTICE STUDIO</span><h1>Make every keystroke <em>count.</em></h1><p>Build the speed, accuracy, and confidence you need for your next typing test.</p><div className="welcome-actions"><button className="button-primary" onClick={() => go('practice')}><Keyboard size={17} /> Start typing <ArrowRight size={16} /></button><button className="button-quiet" onClick={() => go('games')}><Gamepad2 size={17} /> Take a game break</button></div><div className="privacy-inline"><i /> No account needed · your history stays in this browser</div></div>
-      <div className="welcome-visual" aria-hidden="true"><div className="visual-orbit orbit-a" /><div className="visual-orbit orbit-b" /><div className="visual-glow" /><div className="visual-keyboard"><div>{['Q','W','E','R','T','Y','U','I'].map((key, i) => <span key={key} className={i === 4 ? 'key-pop' : ''}>{key}</span>)}</div><div>{['A','S','D','F','G','H','J'].map((key, i) => <span key={key} className={i === 2 ? 'key-mint' : ''}>{key}</span>)}</div><div><span>⇧</span><span>⌘</span><span className="space-key-visual" /><span>↵</span></div></div><i className="visual-star star-a">✦</i><i className="visual-star star-b">✳</i><span className="visual-chip chip-speed"><Zap size={13} /> {stats.best || '—'} WPM best</span><span className="visual-chip chip-accuracy"><Target size={13} /> {stats.accuracy || '—'}% accuracy</span></div>
+      <div className="welcome-visual" aria-hidden="true" onPointerMove={tiltKeyboard} onPointerLeave={resetKeyboardTilt}><div className="visual-orbit orbit-a" /><div className="visual-orbit orbit-b" /><div className="visual-glow" /><div className="visual-keyboard"><div>{['Q','W','E','R','T','Y','U','I'].map((key, i) => <span key={key} className={i === 4 ? 'key-pop' : ''}>{key}</span>)}</div><div>{['A','S','D','F','G','H','J'].map((key, i) => <span key={key} className={i === 2 ? 'key-mint' : ''}>{key}</span>)}</div><div><span>⇧</span><span>⌘</span><span className="space-key-visual" /><span>↵</span></div></div><i className="visual-star star-a">✦</i><i className="visual-star star-b">✳</i><span className="visual-chip chip-speed"><Zap size={13} /> {stats.best || '—'} WPM best</span><span className="visual-chip chip-accuracy"><Target size={13} /> {stats.accuracy || '—'}% accuracy</span></div>
     </section>
     <section className="metric-grid">
       <MetricCard label="Personal best" value={stats.best || '—'} unit="WPM" icon={<Zap size={17} />} tone="violet" detail="Your fastest test" />
