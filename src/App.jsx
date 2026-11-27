@@ -662,6 +662,13 @@ function App() {
   else if (view === 'shared') page = <SharedResult run={incomingShare} onStart={() => startTest(60)} />;
   else page = <SettingsPage language={language} languages={LANGUAGES} sound={sound} volume={volume} savedCount={runs.length} learnerName={learnerName} initials={learnerInitials(learnerName)} resetNotice={resetNotice} onLanguage={chooseLanguage} onSound={setSound} onVolume={setVolume} onSample={() => playSound(true)} onEditName={editLearnerName} onResetHistory={() => { setResetNotice(false); setResetConfirmOpen(true); }} />;
 
+  const navigateFooter = (next) => {
+    if (next === 'practice' && result) resetSession();
+    setView(next);
+    setMobileNav(false);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   return (
     <div className="app-shell">
       <aside className={'sidebar ' + (mobileNav ? 'sidebar-open' : '')}>
@@ -695,7 +702,26 @@ function App() {
           </div>
         </header>
         <div className="page-wrap">{page}</div>
-        <footer className="site-footer"><span>TypingForge <b>·</b> Practice smarter, one keystroke at a time</span><span>Made for your next personal best <Sparkles size={13} /></span></footer>
+        <footer className="site-footer">
+          <div className="site-footer-inner">
+            <button className="footer-brand" type="button" onClick={() => navigateFooter('dashboard')} aria-label="TypingForge home">
+              <span className="footer-brand-mark"><Keyboard size={18} /></span>
+              <span className="brand-name">Typing<span>Forge</span></span>
+            </button>
+            <nav className="site-footer-links" aria-label="Footer navigation">
+              <button type="button" onClick={() => navigateFooter('practice')}>Typing practice</button>
+              <button type="button" onClick={() => navigateFooter('tests')}>Tests & quizzes</button>
+              <button type="button" onClick={() => navigateFooter('results')}>Results</button>
+              <button type="button" onClick={() => navigateFooter('progress')}>Analytics</button>
+              <button type="button" onClick={() => navigateFooter('games')}>Games</button>
+              <a href="https://www.linkedin.com/in/umesh-goyal-a1215123a/" target="_blank" rel="noreferrer">Developer LinkedIn ↗</a>
+            </nav>
+            <div className="footer-legal">
+              <span>Made with <span className="footer-heart" aria-label="love">♥</span> in India</span>
+              <span>© {new Date().getFullYear()} TypingForge · Saved on this device</span>
+            </div>
+          </div>
+        </footer>
       </main>
       {shareRun && <ShareDialog
         run={shareRun} name={shareName} initials={learnerInitials(shareName)} poster={poster} message={shareMessage} error={shareError}

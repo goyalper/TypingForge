@@ -1029,7 +1029,7 @@ button:disabled { cursor: default; }
 .social-share-grid button:disabled { opacity: .48; cursor: default; }
 .social-share-grid button:disabled:hover { border-color: var(--line); background: var(--surface); color: var(--muted-strong); }
 .share-profile-strip .button-secondary { min-height: 35px; padding: 0 10px; font-size: 9px; }
-.passage-text .char-done { border-radius: 3px; background: color-mix(in srgb,var(--mint) 60%,transparent); color: var(--mint-ink); }
+
 .quiz-answer.answer-right { border-color: color-mix(in srgb,#83c995 60%,var(--line)); background: color-mix(in srgb,var(--mint) 70%,var(--surface)); color: var(--mint-ink); }
 
 @media (max-width: 760px) {
@@ -1049,4 +1049,28 @@ button:disabled { cursor: default; }
   .result-trend-column > small { font-size: 6px; }
   .social-share-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
   .share-profile-strip .button-secondary { width: 100%; }
+}
+
+/* Footer links mirror the compact, three-part footer used across Forge tools. */
+.site-footer { display: block; min-height: 0; margin-top: auto; padding: 0; border-top: 1px solid var(--line); background: var(--surface); color: var(--muted); font-size: 10px; }
+.site-footer-inner { display: grid; width: min(100%, 1490px); grid-template-columns: minmax(0,1fr) auto minmax(0,1fr); align-items: center; gap: 20px; margin: 0 auto; padding: 17px clamp(18px,4vw,42px); }
+.footer-brand { display: inline-flex; align-items: center; gap: 10px; justify-self: start; padding: 0; border: 0; background: transparent; color: var(--ink-strong); cursor: pointer; text-align: left; }
+.footer-brand-mark { display: grid; width: 35px; height: 35px; flex: none; place-items: center; border-radius: 11px; background: var(--primary); color: #fff; box-shadow: 0 7px 15px color-mix(in srgb,var(--primary) 22%,transparent); transform: rotate(-3deg); }
+.footer-brand .brand-name { color: var(--ink-strong); font: 800 17px/1 Manrope,sans-serif; letter-spacing: -.6px; }
+.footer-brand .brand-name > span { color: var(--primary); }
+.site-footer-links { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 7px 15px; }
+.site-footer-links button,.site-footer-links a { padding: 4px 0; border: 0; background: transparent; color: var(--muted-strong); font: 600 10px/1.5 'DM Sans',sans-serif; text-decoration: none; white-space: nowrap; cursor: pointer; transition: color .16s ease; }
+.site-footer-links button:hover,.site-footer-links a:hover { color: var(--primary); }
+.site-footer-links button:focus-visible,.site-footer-links a:focus-visible,.footer-brand:focus-visible { outline: 2px solid var(--primary); outline-offset: 4px; border-radius: 3px; }
+.footer-legal { display: flex; flex-direction: column; align-items: flex-end; justify-self: end; gap: 5px; color: var(--muted); font-size: 9px; line-height: 1.35; text-align: right; white-space: nowrap; }
+.footer-heart { margin: 0 2px; color: #dc5b69; font-size: 12px; }
+@media (max-width: 1120px) {
+  .site-footer-inner { grid-template-columns: minmax(0,1fr) auto; gap: 12px 18px; }
+  .site-footer-links { grid-column: 1 / -1; grid-row: 2; justify-content: flex-start; }
+  .footer-legal { grid-column: 2; grid-row: 1; }
+}
+@media (max-width: 760px) {
+  .site-footer-inner { display: flex; align-items: flex-start; flex-direction: column; gap: 13px; padding: 17px 16px; }
+  .site-footer-links { justify-content: flex-start; gap: 7px 14px; }
+  .footer-legal { align-items: flex-start; gap: 4px; text-align: left; white-space: normal; }
 }

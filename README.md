@@ -14,6 +14,8 @@ GitHub Actions runs `npm ci`, the share-link tests, and a production build for p
 
 To enable the first deployment, open the repository's **Settings → Pages** and choose **GitHub Actions** as the build and deployment source.
 
+Search metadata, the sitemap, crawler rules, and the Google Search Console verification file are maintained in `index.html` and `public/`.
+
 ## What’s included
 
 - Timed typing tests with five passage difficulty levels.
